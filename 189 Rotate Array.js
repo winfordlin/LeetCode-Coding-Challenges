@@ -22,18 +22,17 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 Could you do it in-place with O(1) extra space?
 */
 
-//Rotate - Solution 
-const rotate = (array,k) => {
-    let pivot = array.length - (k % array.length);
-    array = array.slice(pivot).concat(array.slice(0,pivot));
-    return array;
-}
-
-//Rotate - Solution 2
-const rotate2 = (array) => {
+//Rotate - Not in-place Solution 
+const rotate = (nums,k) => {
+    let last = nums[nums.length-1];
+    let temp = 0;
+    let test = 0;
+    for(let i = 0; i < nums.length; i++){
+        temp = nums[i+1];
+        nums[i] = temp;
     
-    for(let i = 0; i < array.length; i++){
-        
     }
+    console.log(nums);
 }
 
+console.log(rotate([1,2,3,4,5,6,7],3))

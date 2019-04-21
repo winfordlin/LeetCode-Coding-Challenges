@@ -36,5 +36,3 @@ const isAnagram = (s,t) => {
     }
     return true;
 }
-
-console.log(isAnagram("nl","cx"));
