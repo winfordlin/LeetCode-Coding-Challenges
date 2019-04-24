@@ -2,7 +2,7 @@
 Given an array, rotate the array to the right by k steps, where k is non-negative.
 
 Example 1:
-
+//7-3-1 = 4 
 Input: [1,2,3,4,5,6,7] and k = 3
 Output: [5,6,7,1,2,3,4]
 Explanation:
@@ -22,17 +22,34 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 Could you do it in-place with O(1) extra space?
 */
 
-//Rotate - Not in-place Solution 
+//Solution 1: Naive Solution - Time O(n+k) Space O(1) 
 const rotate = (nums,k) => {
-    let last = nums[nums.length-1];
-    let temp = 0;
-    let test = 0;
-    for(let i = 0; i < nums.length; i++){
-        temp = nums[i+1];
+   for(let i = 0; i < k; i++){
+        let temp = 0;
+        let last = nums[nums.length-1]
+    for(let i = nums.length-1; i >= 0; i--){
+        temp = nums[i-1];
         nums[i] = temp;
-    
-    }
-    console.log(nums);
+        if (nums[0] === undefined){
+             nums[0] = last;
+            }   
+        }
+   }
 }
 
-console.log(rotate([1,2,3,4,5,6,7],3))
+//Solution 2: Copy Over Array Solution - Time O(n) Space O(n)
+const rotate2 = (nums,k) => {
+
+    let pivot = nums.length - (k % nums.length);
+    let secondpart = nums.slice(pivot,nums.length);
+    let firstpart = nums.slice(0,pivot);
+    let copy  = secondpart.concat(firstpart);
+    
+    for(let i = 0; i < nums.length; i++){
+        nums[i] = copy[i];
+    }
+}
+
+
+
+console.log(rotate2([1,2,3,4,5,6,7],3))
