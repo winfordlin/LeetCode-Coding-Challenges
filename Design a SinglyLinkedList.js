@@ -31,14 +31,8 @@ Please do not use the built-in LinkedList library.
  */
 var MyLinkedList = function() {
     this.head = null;
-    this.tail = null;
-    
+    this.length = 0;
 };
-
-var ListNode = function(val) {
-    this.val = val;
-    this.next = null;
-}
 
 /**
  * Get the value of the index-th node in the linked list. If the index is invalid, return -1. 
@@ -46,16 +40,10 @@ var ListNode = function(val) {
  * @return {number}
  */
 MyLinkedList.prototype.get = function(index) {
-    let cur = this.head;
-    let curIndex = index;
-    while(cur){
-        if (curIndex === 0){
-            return cur.val;
-        }
-        curIndex--;
-        cur = cur.next;
-    }
-    return -1;
+    if(index >= this.length) return -1;
+    let cur = this.head, i = 0;
+    while(i !== index) i++, cur = cur.next;
+    return cur.val;
 };
 
 /**
@@ -64,17 +52,10 @@ MyLinkedList.prototype.get = function(index) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtHead = function(val) {
-    let addHead = new ListNode(val);
-    //no head;
-    if (this.head === null){
-        this.head = addHead;
-        this.tail = addHead;
-    //existing head
-    }else {
-        addHead.next = this.head;
-        this.head = addHead;
-        
-    }
+    let addHead = {val:val};
+    addHead.next = this.head;
+    this.head = addHead;
+    this.length++;
 };
 
 /**
@@ -83,19 +64,16 @@ MyLinkedList.prototype.addAtHead = function(val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtTail = function(val) {
-    let addTail = new ListNode(val);
-    //if no head
-    if (this.head === null){
-        this.head = addTail;
-        this.tail = addTail; 
-    //existing head
-    }else {
-        let cur = this.head;
-        while(cur.next){
-            cur = cur.next;
-        }
-        cur.next = addTail;
+    if (!this.length){
+        this.addAtHead(val)
+        return;
     }
+    let cur = this.head;
+    while(cur.next) cur = cur.next;
+    let addTail = {val:val};
+    addTail.next = null;
+    cur.next = addTail;
+    this.length++;
 };
 
 /**
@@ -107,30 +85,21 @@ MyLinkedList.prototype.addAtTail = function(val) {
 
 
 MyLinkedList.prototype.addAtIndex = function(index, val) {
-    
-    let addIndex = new ListNode(val);
-    let cur = this.head;
-    let curIndex = index - 1;
-
-    //add a head
-    if (curIndex === -1){
-        this.addAtHead(val)
-    }
-
-    
-    while(cur){
-        if (curIndex === 0){
-            let temp = cur.next;
-
-            cur.next = addIndex;
-            addIndex = temp;
-            if (temp === null){
-                this.tail === addIndex;
-            }
-        }
-        cur = cur.next;
-        curIndex--;
-    }
+    if(index>this.length) return;
+	if(index===this.length){
+		this.addAtTail(val);
+		return;
+	}
+	if(index===0){
+		this.addAtHead(val);
+		return;
+	}
+	let i=0, cur = this.head;
+	while(i<index-1) i++,  cur = cur.next;
+	let prev = cur, next = cur?cur.next:null, newNode = {val:val};
+	newNode.next = next;
+	prev.next = newNode;
+	this.length++;
 };
 
 /**
@@ -139,47 +108,11 @@ MyLinkedList.prototype.addAtIndex = function(index, val) {
  * @return {void}
  */
 MyLinkedList.prototype.deleteAtIndex = function(index) {
-    let cur = this.head;
-    let curIndex = index;
+    if (index >= this.length) return;
+    let cur = this.head, i = 0;
 
-    //delete head
-    if (cur.next && index === 0){
-        this.head = cur.next;
-    //delete body
-    }else {
-        while (cur.next){
-            curIndex--;
-            if (curIndex === 0){
-                cur.next = cur.next.next;
-            }
-            cur = cur.next;
-        }
-    }
+    while(i < index-1) i++, cur = cur.next;
+    let prev = cur, next = cur.next.next;
+    prev.next = next;
+    this.length--;
 };
-
-/** 
- * Your MyLinkedList object will be instantiated and called as such:
- * var obj = new MyLinkedList()
- * var param_1 = obj.get(index)
- * obj.addAtHead(val)
- * obj.addAtTail(val)
- * obj.addAtIndex(index,val)
- * obj.deleteAtIndex(index)
- */
-
- let test = new MyLinkedList();
- test.addAtHead(3);
- test.addAtHead(2);
- test.addAtHead(1);
- test.addAtTail(4);
- 
-
-
- let cur = test.head;
- while(cur){
-     console.log(cur.val);
-     cur = cur.next;
- }
-
- console.log(test.get(4));
-
