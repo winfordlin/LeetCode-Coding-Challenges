@@ -21,41 +21,29 @@ A solution set is:
  * @return {number[][]}
  */
 var threeSum = function(nums) {
-    let res = [];
-
-    nums.sort((a,b) => {return a - b});
-    //[-4,-1,-1,0,1,2]
-    for(let i = 0; i < nums.length; i++){
-
-      let difference = 0 - nums[i];
-      let l = 0;
-      let r = nums.length-1;
-      let res1 = [];
-      if (i > 0 && nums[i] === nums[i - 1]) continue
-      while(l < r){
-
-        if(nums[l] === nums[i]){
-          l++;
-        } else if (nums[r] === nums[i]){
-          r--;
-        } else if (nums[l] + nums[r] === difference){
-          res1.push(nums[l]);
-          res1.push(nums[i]);
-          res1.push(nums[r]);
-          res1.sort((a,b) => {return a - b});
-          res.push(res1);
-          break;
-        } else if (nums[l] + nums[r] < difference){
-          l++;
-        } else if (nums[l] + nums[r] > difference){
-          r--;
-        }
+  let res = [];
+  if (nums.length < 3) return res;
+  nums.sort((a,b) => {return a - b});
+  for(let i = 0; i < nums.length-2; i++){
+    let left = i + 1, right = nums.length - 1, target = 0;
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+		
+    while (left < right){
+      let currentSum = nums[i] + nums[left] + nums[right];
+      if (currentSum === target){
+        res.push([nums[i],nums[left],nums[right]]);
+        left++;
+        right--;
+        while (left < right && nums[left] === nums[left - 1]) left++;
+        while (left < right && nums[right] === nums[right + 1]) right--;
+      }else if (currentSum < target){
+        left++;
+      }else {
+        right--;
       }
     }
-    let resz = Array.from(new Set(res));
-    return resz; 
+  }
+  return res;
 };
 
 console.log(threeSum([-1, 0, 1, 2, -1, -4]));
-
-
