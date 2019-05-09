@@ -11,22 +11,30 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 */
 
-//Solution 1 - Time O(N) Space O(N) 
+//Solution 1 - Time O(N) Space O(N) beats 99% of runtime
 
-const twoSum = (nums,target) => {
-    let obj = {};
-
-    for(let i = 0; i < nums.length; i++){
-        
-        if (obj[target - nums[i]]){
-            return [parseInt(obj[target-nums[i]]),i]
-        } else {
-            obj[nums[i]] = i.toString();
-        }  
-    }   
-    return res;
+const tSUM = (arr, target) => {
+    let pair = {};
+    for(let i = 0; i < arr.length;i++){
+        let difference = target - arr[i];
+        if (difference in pair){
+            return [pair[difference], i]
+        }else {
+            pair[arr[i]] = i; 
+        }
+    }
 }
 
-
-console.log(twoSum())
-
+//Solution 2 - Time Space O(N^2) beats 97% of memory 
+const twoSUM = (arr, target) => {
+    let res = [];
+    for(let i = 0; i < arr.length; i++){
+        const difference = target - arr[i];
+        const index = arr.indexOf(difference,i+1);
+        if (index > 0){
+            res = [i,index];
+            break;
+        }
+    }
+    return res;
+}
