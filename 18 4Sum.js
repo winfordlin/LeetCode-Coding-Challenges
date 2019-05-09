@@ -23,18 +23,29 @@ A solution set is:
  * @return {number[][]}
  */
 var fourSum = function(nums, target) {
-    let res = {};
-    let ret = [];
-    for(let i = 0; i < nums.length; i++){
-        for(let j = i + 1; j < nums.length;j++){
-            let currentSum = nums[i] + nums[j];
-            let difference = target - currentSum;
-            if (difference in res){
-                
+    let pairOfSums = {};
+    let quadruplets = [];
+
+    for(let i = 1; i < nums.length-1; i ++){
+        for(let j = i + 1; j < nums.length; j++){
+            const currentSum = nums[i] + nums[j];
+            const difference = target - currentSum;
+            if (difference in pairOfSums){
+                for(let pair of pairOfSums[difference]){
+                    quadruplets.push(pair.concat([nums[i],nums[j]]));
+                }
+            }
+        }
+        for(let k = 0; k < i; k++){
+            const currentSum = nums[i] + nums[k];
+            if (!(currentSum in pairOfSums)){
+                pairOfSums[currentSum] = [[nums[k],nums[i]]];
+            }else {
+                pairOfSums[currentSum].push([nums[k],nums[i]]);
             }
         }
     }
-        console.log(res);
+    return quadruplets;
 }
 
-console.log(fourSum([1, 0, -1, 0, -2, 2]))
+console.log(fourSum([1, 0, -1, 0, -2, 2],0))
