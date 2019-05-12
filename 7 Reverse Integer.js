@@ -21,6 +21,9 @@ Assume we are dealing with an environment which could only store integers within
  * @param {number} x
  * @return {number}
  */
+
+
+//Solution 1: beats 99% of runtime
 var reverse = function(x) {
     let arr = x.toString().split('');
     let l = 0, r = arr.length-1;
@@ -31,7 +34,6 @@ var reverse = function(x) {
         r--;
     }
 
-    
     if (arr[arr.length-1] === '-'){
         if (-parseInt(arr.join('')) < -Math.pow(2,31)){
             return 0;
@@ -46,3 +48,23 @@ var reverse = function(x) {
         } 
     }
 };
+
+//Solution 2 beats 100% of memory
+
+const reverses = function(x){
+    let isNegative = false;
+    if (x < 0) isNegative = true;
+    let res = 0;
+    let y = Math.abs(x);
+    while (y > 0){
+        let pop = Math.round(y % 10);
+        res = res * 10 + pop;
+        y = Math.floor(y / 10);
+        
+   }
+   if (res > Math.pow(2,31)) return 0;
+   return isNegative ? -res: res; 
+    
+}
+
+console.log(reverses(321))
