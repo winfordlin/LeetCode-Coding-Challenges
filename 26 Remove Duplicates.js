@@ -36,14 +36,26 @@ for (int i = 0; i < len; i++) {
 */
 
 const removeDuplicates = (array) => {
-    let k = 0
+    let k = 0;
     for(let i = 0; i < array.length; i++){
         if (array[i] !== array[i+1]){
             array[k] = array[i];
             k++;
-        }  
+        }
     }
     return k;
 }
 
-console.log(removeDuplicates([0,0,1,1,1,2,2,3,3,4]));
+
+
+
+
+
+
+
+
+
+
+
+
+
