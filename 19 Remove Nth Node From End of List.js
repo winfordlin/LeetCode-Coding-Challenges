@@ -36,12 +36,10 @@ function ListNode(val) {
 //Solution 1: Single Pass
 var removeNthFromEnd = function(head, n) {
     if (!head) return null;
-    let s = head, f = head, i = 0;
-    while(i < n) f = f.next;
-    while (f.next) s = s.next, f = f.next;
-    let res = s.next;
-    s.next = f;
-    return res;
+    let fast = head, slow = head, i = 0;
+    while(i < n) fast = fast.next;
+    while (!fast.next) slow = slow.next,fast = fast.next;
+    let res = slow.next;
+    slow.next = fast;
+    return res;  
 }
-
-

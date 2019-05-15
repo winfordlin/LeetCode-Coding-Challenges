@@ -27,6 +27,41 @@ function ListNode(val) {
 }
 
 var mergeTwoLists = function(l1, l2) {
+    let l3 = new ListNode;
+    l3.next = l1;
+    let list1 = l1;
+    let list2 = l2;
+    while(list1 && list2){
+        if (list2.val <= list1.val){
+            list2.next = list1
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
     let l3 = new ListNode();
     let cur = l3;
 
@@ -45,3 +80,4 @@ var mergeTwoLists = function(l1, l2) {
 };
 
 
+*/
