@@ -13,6 +13,8 @@ Input: haystack = "aaaaa", needle = "bba"
 Output: -1
 
 */
+
+
 //Solution 1: O(N^2)
 
 const strStr = (haystack,needle) => {
