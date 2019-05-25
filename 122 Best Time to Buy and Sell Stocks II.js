@@ -29,6 +29,7 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
  * @param {number[]} prices
  * @return {number}
  */
+
 var maxProfit = function(prices) {
     let maxProfit = 0;
     for(let i = 1; i < prices.length;i++){
@@ -40,4 +41,3 @@ var maxProfit = function(prices) {
     return maxProfit;
 };
 
-console.log(maxProfit([1,2,3,4,5]))
