@@ -17,20 +17,19 @@ Output: 4
 
 //Naive Solution: RunTime O(N) Space O(N)
 const singleNumber = (nums) => {
-    let obj = {};
+    let objFreq = {}
     for(let i = 0; i < nums.length; i++){
-        obj[nums[i]] = ++obj[nums[i]] || 1;
+        objFreq[nums[i]] = ++objFreq[nums[i]] || 1;
     }
 
-    for (num in obj){
-        if (obj[num] === 1){
-            return num.toString();
+    for(keys in objFreq){
+        if (objFreq[keys] === 1){
+            return keys;
         }
     }
 }
 
-//Solution 2: Runtime O(n log n) Space O(1)
-
+//Sort Solution RunTime O(n logn) Space O(N)
 const singleNumber2 = (nums) => {
     nums.sort((a,b) => {return a - b});
     for(let i = 0; i < nums.length; i+=2){
@@ -39,4 +38,22 @@ const singleNumber2 = (nums) => {
         }
     }
 }
+
+//Math Solution RunTime O(n) Space O(n)
+const singleNumber3 = (nums) => {
+    let sum = 0;
+    let numSetSum = 0;
+    let numSet = new Set(nums);
+
+    for(let i = 0; i < nums.length; i++){
+        sum += nums[i];
+    }
+    
+    for(nums of numSet){
+        numSetSum += nums;
+    }
+    return (2*numSetSum) - sum;
+}
+console.log(singleNumber3([4,1,2,1,2]))
+
 
