@@ -23,6 +23,8 @@ Could you do it in-place with O(1) extra space?
 */
 
 //Solution 1: Naive Solution - Time O(n+k) Space O(1) 
+
+
 const rotate = (nums,k) => {
    for(let i = 0; i < k; i++){
         let temp = 0;
@@ -53,3 +55,4 @@ const rotate2 = (nums,k) => {
 
 
 console.log(rotate2([1,2,3,4,5,6,7],3))
+*/
