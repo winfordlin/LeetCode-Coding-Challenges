@@ -22,7 +22,29 @@ function ListNode(val) {
 /**
  * @param {ListNode} head
  * @return {ListNode}
+ * 
  */
+
+ const hasCycle = (head) => {
+     if (!head || !head.next) return null;
+     let slow = head;
+     let fast = head;
+
+    while (slow !== fast){
+        slow = slow.next;
+        fast = fast.next.next;
+        if (!fast.next || !fast.next.next) return null;
+    }
+
+    fast = head;
+
+    while (slow != fast){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return fast;
+     }
+/*
 var detectCycle = function(head) {
     if (!head || !head.next) return -1;
     let s = head;
@@ -47,3 +69,4 @@ var detectCycle = function(head) {
 
 
 
+*/
