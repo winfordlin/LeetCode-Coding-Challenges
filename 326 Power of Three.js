@@ -37,3 +37,12 @@ const powerofthree = (n) => {
     
     return n === 3 || n === 1;
 }
+
+
+
+
+const powerofthree2 = (n) => {
+    return Math.log10(n)/Math.log10(3) % 1 === 0;
+}
+
+console.log(powerofthree2(28))
