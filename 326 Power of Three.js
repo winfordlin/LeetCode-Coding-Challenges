@@ -21,28 +21,33 @@ Follow up:
 Could you do it without using any loop / recursion?
 */
 
-//Solution 1: Iteration
-
-//Solution 2: Recursion
-
-//Solution 3: Math
+//Solution 1: Iterative
 
 const powerofthree = (n) => {
-    if (n === 0) return 0;
-    if (n === 1) return 1;
+    if (n === 0) return false;
+    if (n === 1) return true;
 
     while(n % 3 === 0){
         n = n / 3;
     }
     
-    return n === 3 || n === 1;
+    return n === 1;
 }
 
 
+//Solution 2: Recursive
 
 
-const powerofthree2 = (n) => {
+//Solution 3: Math Change of Base Formula 
+
+const powerofthree3 = (n) => {
     return Math.log10(n)/Math.log10(3) % 1 === 0;
 }
 
-console.log(powerofthree2(28))
+
+
+
+
+
+
+console.log(powerofthree2(2))
