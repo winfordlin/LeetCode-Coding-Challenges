@@ -20,7 +20,8 @@ minStack.getMin();   --> Returns -2.
  * initialize your data structure here.
  */
 var MinStack = function() {
-    this.items = [];
+    this.container = [];
+    this.MinStack = [];
 };
 
 /** 
@@ -28,43 +29,35 @@ var MinStack = function() {
  * @return {void}
  */
 MinStack.prototype.push = function(x) {
-    this.items.unshift(x);
+    this.container.push(x);
+    if (this.MinStack.length === 0 || x < this.MinStack[this.MinStack.length-1]){
+        this.MinStack.push(x);
+    }
 };
 
 /**
  * @return {void}
  */
 MinStack.prototype.pop = function() {
-    if (!this.items.length){
-        return 'Underflow'
+    this.container.pop();
+    if (x === this.MinStack[this.MinStack.length-1]){
+        this.MinStack.pop();
     }
-    this.items.shift();
 };
 
 /**
  * @return {number}
  */
 MinStack.prototype.top = function() {
-    if (!this.items.length){
-        return 'Underflow'
-    }
-    return this.items[0];
+    return this.container[this.container.length-1];
+    
 };
 
 /**
  * @return {number}
  */
 MinStack.prototype.getMin = function() {
-    if (!this.items.length){
-        return 'Underflow'
-    }
-    let min = this.items[0]
-    for(let i = 1; i < this.items.length;i++){
-        if (this.items[i] < min){
-            min = this.items[i];
-        }
-    }
-    return min;
+    return this.MinStack[this.MinStack.length-1];
 };
 
 /** 
@@ -76,14 +69,5 @@ MinStack.prototype.getMin = function() {
  * var param_4 = obj.getMin()
  */
 
-var obj = new MinStack();
-obj.push(-2);
-obj.push(0);
-obj.push(-3);
-console.log(obj)
-var para_4 = obj.getMin();
-obj.pop();
-console.log(obj.top());
-console.log(para_4);
-console.log(obj);
+
 
