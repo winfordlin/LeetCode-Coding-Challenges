@@ -30,30 +30,23 @@ Output: true
 */
 
 const valid = (res) => {
+
     let mapping = { 
-        "{":"}",
-        "[":"]",
-        "(":")"
+        ")": "(",
+        "]": "[",
+        "}": "{"
     };
 
     let stack = [];
-
     for(let i = 0; i < res.length; i++){
-        //rules
-        //parse through the string 
-        //if any of those above in mapping 
-        let char = res[i];
-        if (char in mapping){
-            stack.push(res[i]);
+        if (res[i] === "(" || res[i] === "[" || res[i] === "{"){
+            stack.push(res[i]); 
         } else {
             if (stack[stack.length-1] === mapping[res[i]]){
                 stack.pop();
-            } else {
-                return false;
-            }
+            } else return false;
         }
     }
-    console.log(stack);
+    return stack;  
 }
 
-console.log(valid("([])"))
