@@ -19,12 +19,12 @@ const majorityElement = function(nums) {
 
 const majority = (nums,start,end) => {
     //base case if elements are the same
-    if (nums[start] === nums[end]) return nums[start]
+    if (start === end) return nums[start];
 
-    let middle = nums.length/2;
+    let middle = parseInt(start+(end-start)/2);
 
-    let leftcount = majority(nums,start,middle-1);
-    let rightcount = majority(nums,middle,end);
+    let leftcount = majority(nums,start,middle);
+    let rightcount = majority(nums,middle+1,end);
 
     if (checkMajority(nums,leftcount)) return leftcount;
     if (checkMajority(nums,rightcount)) return rightcount;
@@ -39,5 +39,7 @@ function checkMajority(nums,n){
             count++;
         }
     }
-    return count;
+    return count > nums.length/2;
 }
+
+console.log(majorityElement([2,2,1,1,1,2,2]))
