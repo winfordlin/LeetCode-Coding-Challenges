@@ -43,17 +43,16 @@ var coinChange1 = function(coins, amount) {
 //DP 
 
 var coinChange = function(coins, amount){
-    let coinArray = new Array(coins.length).fill(Infinity);
+    let coinArray = new Array(amount+1).fill(Infinity);
     coinArray[0] = 0;
-
-    for(let i = 0; i < amount; i++){
+    
+    for(let i = 1; i <= amount; i++){
         for(let j = 0; j < coins.length;j++){
-            if (i >= coins[j]){
+            if (coins[j] <= i){
                 coinArray[i] = Math.min(coinArray[i],coinArray[i-coins[j]]+1);
+                
             }
         }
     }
-    return coinArray[amount] > amount ? -1 : coinArray[amount];
+    return (coinArray[amount] !== Infinity) ? coinArray[amount] : -1;
 }
-
-console.log(coinChange([6,5,1],4));
