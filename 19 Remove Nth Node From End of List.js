@@ -35,11 +35,17 @@ function ListNode(val) {
 
 //Solution 1: Single Pass
 var removeNthFromEnd = function(head, n) {
-    if (!head) return null;
-    let fast = head, slow = head, i = 0;
-    while(i < n) fast = fast.next;
-    while (!fast.next) slow = slow.next,fast = fast.next;
-    let res = slow.next;
-    slow.next = fast;
-    return res;  
+    var nullHead = new ListNode(null);
+    nullHead.next = head;
+    var p1 = nullHead;
+    var p2 = nullHead;
+    
+    for(var i = 0; i < n + 1; i++)
+        p1 = p1.next;
+    while(p1 !== null){
+        p2 = p2.next;
+        p1 = p1.next;
+    }
+    p2.next = p2.next.next;
+    return nullHead.next;
 }
