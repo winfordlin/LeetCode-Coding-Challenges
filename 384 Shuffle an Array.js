@@ -21,7 +21,7 @@ solution.shuffle();
  * @param {number[]} nums
  */
 var Solution = function(nums) {
-    this.nums = nums;
+    this.nums = nums; 
 };
 
 /**
@@ -29,16 +29,32 @@ var Solution = function(nums) {
  * @return {number[]}
  */
 Solution.prototype.reset = function() {
-    return this.nums;
+    return this.nums; 
 };
 
 /**
  * Returns a random shuffling of the array.
  * @return {number[]}
  */
+
+Solution.prototype.swap = function(ans,i,j){
+    let temp = ans[i];  
+    ans[i] = ans[j];
+    ans[j] = temp; 
+    return ans; 
+  };
+
 Solution.prototype.shuffle = function() {
+    let ans = this.nums.map(num => num);
+    for(let i = ans.length-1; i > 0; i--){
+        let j = Math.floor(Math.random() * Math.floor(i+1));
+        ans = this.swap(ans,i,j);
+    }
     
+    return ans; 
 };
+
+
 
 /** 
  * Your Solution object will be instantiated and called as such:
@@ -47,7 +63,3 @@ Solution.prototype.shuffle = function() {
  * var param_2 = obj.shuffle()
  */
 
-let lol = new Solution([1,2,3,4]);
-let param = lol.reset();
-console.log(lol);
-console.log(param);
