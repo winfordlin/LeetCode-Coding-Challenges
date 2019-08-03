@@ -27,29 +27,19 @@ function ListNode(val) {
  * @return {ListNode}
  */
 var oddEvenList = function(head) {
-    if (!head || !head.next){
-        return head;
-    }
-    const even = head;
-    const odd = head.next;
-    let evenPos = head;
-    let oddPos = head.next;
+    if (!head || !head.next) return head;
 
-    while(even.next.next != null){
-        
-    }
+    let odd = head;
+    let even = head.next;
 
+    while (odd && odd.next){
+        let temp = odd.next;
+        odd.next = odd.next.next;
+        if (odd.next){
+            odd = odd.next;
+            temp.next = odd.next;
+        }
+    }
+    odd.next = even;
+    return head;
 };
-
-let one = new ListNode(1);
-let two = new ListNode(2);
-let three = new ListNode(3);
-let four = new ListNode(4);
-let five = new ListNode(5);
-
-one.next = two;
-two.next = three;
-three.next = four;
-four.next = five;
-
-console.log(oddEvenList(one))
