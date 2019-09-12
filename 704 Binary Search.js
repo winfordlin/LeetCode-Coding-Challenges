@@ -49,23 +49,20 @@ var binarySearch = function(nums, target, left, right){
 
 // Iterative Solution Time O(log n) Space O(1)
 
-var search1 = function(nums, target) {
-    return binarySearch(nums,target,0,nums.length-1);
-};
-
-var binarySearch = function(nums, target, left, right){
-    while (left <= right){
-        let mid = Math.floor((left+right)/2);
-        let middle = nums[mid];
-
-        if (target === middle){
+var searchIterative = function(nums, target) {
+    let left = 0;
+    let right = nums.length - 1;
+    while (left < right){
+        let mid = left + Math.floor((right-left)/2);
+        
+        if (nums[mid] === target){
             return mid;
-        }else if (target < middle){
-            right = middle - 1;
+        }else if (nums[mid] < target){
+            left = mid+1;
         }else {
-            left = middle + 1;
+            right = mid-1;
         }
     }
+
     return -1;
 }
-console.log(search1([1,2,3,4,5],2))
