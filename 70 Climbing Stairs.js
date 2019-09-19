@@ -27,26 +27,77 @@ Explanation: There are three ways to climb to the top.
  * @return {number}
  */
 
-// Fibonacci Runtime O(n^2) Spacetime O(n)
-var climbStairs = function(n) {
+
+/*
+Brute Force Methods
+*/
+
+
+
+// Recursive Approach- Time Complexity: O(2^n) Space Complexity: O(n)
+const climbStairs_Recursive = (n) => {
     if (n === 1) return 1;
     if (n === 2) return 2;
 
-    return climbStairs(n-2) + climbStairs(n-1);
-};
+    return climbStairs_Recursive(n-2) + climbStairs_Recursive(n-1);
+}
 
-// Fibonacci Iterative Runtime O(n) Spacetime 
-var climbStairs1 = function(n) {
-    if (n === 1){
-        return 1;
-    }
-    let first = 1;
-    let second = 2;
+
+/*
+Dynamic Programming Methods
+*/
+
+// Top Down Recursive Approach With Memoization - Time Complexity: O(n) Space Complexity: O(n)
+const climbStairs_Memoization = (n) => {
+    let memoTable = new Array(n+1);
+    memoTable[1] = 1;
+    memoTable[2] = 2;
+    return climbHelp(n,memoTable);
+}
+
+const climbHelp = (n,memoTable) => {
+    if (n === 1) return 1;
+    if (n === 2) return 2;
+    if (memoTable[n] > 0) return memoTable[n];
+
+    memoTable[n] = climbHelp(n-2,memoTable) + climbHelp(n-1,memoTable);
+
+    return memoTable[n];
+}
+
+// Bottom Up Tabulation Approach - Time Complexity: O(n) Space Complexity: O(n)
+const climbStairs_Tabulation = (n) => {
+    let memoTable = new Array(n+1);
+    memoTable[1] = 1;
+    memoTable[2] = 2;
 
     for(let i = 3; i <= n; i++){
-        let third = first + second;
-        first = second;
-        second = third
+        memoTable[i] = memoTable[i-2] + memoTable[i-1];
     }
-    return second;
+
+    return memoTable[n];
 }
+
+// Bottom Up Tabulation with Local Variables - Time Complexity: O(n) Space Complexity: O(1)
+const climbStairs_Iteration = (n) => {
+    let a = 1;
+    let b = 2;
+    let c;
+
+    if (n === 1) return a;
+    if (n === 2) return b;
+
+    for(let i = 3; i <= n; i++){
+        c = a + b;
+        [a,b] = [b,c];
+    }
+
+    return c;
+}
+
+
+
+
+
+//  Runtime O(n^2) Spacetime O(n)
+
