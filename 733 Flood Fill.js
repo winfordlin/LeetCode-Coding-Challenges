@@ -35,12 +35,11 @@ The value of each color in image[i][j] and newColor will be an integer in [0, 65
  * @param {number} newColor
  * @return {number[][]}
  */
-var floodFill = function(image, sr, sc, newColor) {
+var floodFill_DFS_Recursion = function(image, sr, sc, newColor) {
     let color = image[sr][sc];
     if (color !== newColor) dfs(image,color,sr,sc,newColor);
     return image;
 };
-
 
 var dfs = function(image,color,sr,sc,newColor){
         if (image[sr][sc] === color){
@@ -51,3 +50,21 @@ var dfs = function(image,color,sr,sc,newColor){
             if (sc-1 >= 0)dfs(image,color,sr,sc-1,newColor);    
         }
 }
+
+var floodFill_DFS_Stack = function(image, sr, sc, newColor) {
+    let color = image[sr][sc];
+    let stack = [];
+    if (color !== newColor) stack.push([sr,sc]);
+    while (stack.length){
+        let x = stack.pop();
+        if (image[x[0]][x[1]] === color){
+            image[x[0]][x[1]] = newColor;
+            if (x[0]-1 >= 0) stack.push([x[0]-1,x[1]]);
+            if (x[0]+1 < image.length) stack.push([x[0]+1,x[1]]);
+            if (x[1]-1 >= 0) stack.push([x[0],x[1]-1]);
+            if (x[1]+1 < image[x[0]].length) stack.push([x[0],x[1]+1]);
+        }
+    }
+    
+    return image;
+};
