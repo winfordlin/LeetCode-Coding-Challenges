@@ -1,5 +1,5 @@
 /*
-Given a binary tree, return the preorder traversal of its nodes' values.
+Given a binary tree, return the inorder traversal of its nodes' values.
 
 Example:
 
@@ -10,7 +10,7 @@ Input: [1,null,2,3]
     /
    3
 
-Output: [1,2,3]
+Output: [1,3,2]
 Follow up: Recursive solution is trivial, could you do it iteratively?
 */
 
@@ -18,32 +18,35 @@ function TreeNode(val) {
   this.val = val;
   this.left = this.right = null;
 }
+
 /**
  * @param {TreeNode} root
  * @return {number[]}
  */
-
-var preorderTraversal = function(root, arr = []) {
+var inorderTraversal = function(root, arr = []) {
   if (root) {
+    inorderTraversal(root.left, arr);
     arr.push(root.val);
-    preorderTraversal(root.left, arr);
-    preorderTraversal(root.right, arr);
+    inorderTraversal(root.right, arr);
   }
+
   return arr;
 };
 
-var preorderTraversalIterative = function(root) {
+var inorderTraversal = function(root) {
   if (!root) return [];
 
   let stack = [];
   let output = [];
-  stack.push(root);
 
-  while (stack.length) {
+  while (stack.length || root) {
+    while (root) {
+      stack.push(root);
+      root = root.left;
+    }
     root = stack.pop();
     output.push(root.val);
-    if (root.right) stack.push(root.right);
-    if (root.left) stack.push(root.left);
+    root = root.right;
   }
 
   return output;
