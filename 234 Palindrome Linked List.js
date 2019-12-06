@@ -13,10 +13,9 @@ Follow up:
 Could you do it in O(n) time and O(1) space?
 */
 
-
 function ListNode(val) {
-     this.val = val;
-     this.next = null;
+  this.val = val;
+  this.next = null;
 }
 
 /**
@@ -24,71 +23,72 @@ function ListNode(val) {
  * @return {boolean}
  */
 
-// 121  2     2
- //1-2->3->4->5
-// 1
- //1-2->3->4
 var isPalindrome = function(head) {
-    let prev = new ListNode(null);
-    prev.next = head;
-    let p1 = head;
-    let middle = head;
-    let p2 = head;
+  if (!head || !head.next) return true;
 
-    while (p2.next && p2.next.next){
-        prev = prev.next
-        middle = middle.next;
-        p2 = p2.next.next;
+  //get middle
+  let headPtr = head;
+  let slow = head;
+  let fast = head;
+  let length = 1;
+
+  while (fast.next) {
+    slow = slow.next;
+    fast = fast.next;
+    length++;
+
+    if (fast.next) {
+      fast = fast.next;
+      length++;
     }
+  }
 
-    if (p2.next){
-        middle.next = null;
-    } else {
-        p2 = middle.next;
-        prev.next = null;
+  // odd or even cases
+
+  let firstHalf = headPtr;
+  let secondHalf = slow;
+
+  if (length % 2 === 0) {
+    for (let i = 1; i < length / 2; i++) {
+      headPtr = headPtr.next;
     }
-
-    p2 = reverse(p2);
-
-    while(p1.next && p2.next){
-        if (p1.val != p2.val){
-            return false;
-        }
-        p1 = p1.next;
-        p2 = p2.next;
+    headPtr.next = null;
+  } else {
+    for (let i = 1; i < Math.floor(length / 2); i++) {
+      headPtr = headPtr.next;
     }
-    return true;
+    headPtr.next = null;
+    secondHalf = secondHalf.next;
+  }
 
+  //reverse first half and compare
+
+  firstHalf = reverseLinkedList(firstHalf);
+
+  while (firstHalf) {
+    if (firstHalf.val !== secondHalf.val) {
+      return false;
+    }
+    firstHalf = firstHalf.next;
+    secondHalf = secondHalf.next;
+  }
+
+  return true;
 };
 
-function reverse(head){
-    if (!head || !head.next){
-        return head;
-    }
+let reverseLinkedList = function(head) {
+  let prev = null;
+  let cur = head;
+  let next = null;
 
-    let cur = head;
-    let next = null;
-    let prev = null;
-
-    while(cur){
-        next = cur.next;
-        cur.next = prev;
-        prev = cur;
-        cur = next;
-    }
-
-    return prev;
-}
-
-let one = new ListNode(1);
-let two = new ListNode(2);
-let three = new ListNode(2);
-let four = new ListNode(1);
-//let five = new ListNode(5);
-
-one.next = two;
-two.next = three;
-three.next = four;
-//four.next = five;
-
-console.log(isPalindrome(one))
+  while (cur) {
+    //cache the next
+    next = cur.next;
+    //reverse
+    cur.next = prev;
+    //advance cur and next
+    prev = cur;
+    cur = next;
+  }
+  return prev;
+};
