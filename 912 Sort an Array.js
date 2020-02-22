@@ -20,8 +20,8 @@ Constraints:
 */
 
 
-//Using mergesort for guaranteed worst case linearithmic runtime of O(nlogn), will update with quicksort implementation which 
-// has average case O(nlogn) linearithmic runtime and O(1) constant space
+//Using mergesort for guaranteed worst case linearithmic runtime of O(nlogn), quicksort implementation
+// has average case O(nlogn) linearithmic runtime and O(n) linear space
 
 /**
  * @param {number[]} nums
@@ -60,4 +60,39 @@ function merge(left, right) {
     while (j < right.length) aux[k++] = right[j++];
 
     return aux;
+}
+
+
+//quicksort
+
+var sortArray = function (nums) {
+    //return the sorted array
+    sort(nums, 0, nums.length - 1);
+    return nums;
+}
+
+var sort = function (nums, l, r) {
+    //base case
+    if (l >= r) return;
+    let pivot = partition(nums, l, r);
+    sort(nums, l, pivot - 1);
+    sort(nums, pivot + 1, r);
+}
+
+var partition = function (nums, l, r) {
+    //i is the placeholder
+    //j is the scanner
+    //r is the pivot at the end
+    let i = l;
+    let j = l;
+
+    while (j < r) {
+        if (nums[j] < nums[r]) {
+            [nums[i], nums[j]] = [nums[j], nums[i]];
+            i++;
+        }
+        j++;
+    }
+    [nums[i], nums[r]] = [nums[r], nums[i]];
+    return i;
 }
