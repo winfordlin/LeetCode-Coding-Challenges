@@ -22,65 +22,47 @@ Output: [1,2,3,4,8,12,11,10,9,5,6,7]
 */
 
 const spiral = (matrix) => {
-        if(!matrix.length)
-            return [];
-        
-        const numberOfRows = matrix.length;
-        const numberOfColumns = matrix[0].length;
-        
-        let startRow = 0;
-        let startColumn = 0;
-        let endRow = numberOfRows - 1;
-        let endColumn = numberOfColumns - 1;
-        
-        let result = [];
-        
-        while(startRow <= endRow && startColumn <= endColumn) {
-            startRow = printTheFirstRow(matrix, startRow, startColumn, endColumn, result);
-            endColumn = printTheLastColumn(matrix, startRow, endRow, endColumn, result);
-            if (startRow <= endRow) {
-                endRow = printTheLastRow(matrix, endRow, startColumn, endColumn, result);
+    //traverse the perimeter by 
+    //keeping track of starting row, ending row, starting column, and ending column
+
+    let res = []
+
+    let startRow = 0;
+    let endRow = matrix.length - 1;
+    let startCol = 0;
+    let endCol = matrix[0].length - 1;
+
+    while (startRow <= endRow && startCol <= endCol) {
+        //top row
+        for (let i = startCol; i <= endCol; i++) {
+            res.push(matrix[startRow][i])
+        }
+
+        //left col
+        for (let i = startRow + 1; i <= endRow; i++) {
+            res.push(matrix[i][endCol]);
+        }
+
+        //bottom row
+        for (let i = endCol - 1; i >= startCol; i--) {
+            if (startRow === endRow) {
+                break;
             }
-            if(startColumn <= endColumn) {
-               startColumn = printTheFirstColumn(matrix, endRow, startRow, startColumn, result);
+            res.push(matrix[endRow][i]);
+        }
+
+        //right col
+        for (let i = endRow - 1; i > startRow; i--) {
+            if (startCol === endCol) {
+                break;
             }
+            res.push(matrix[i][startCol]);
         }
-        
-        return result;
-    };
-    
-    const shouldPrint = (startRow, startColumn, endRow, endColumn) => {
-        return startRow <= endRow && startColumn <= endColumn;
+        startRow++;
+        endRow--;
+        startCol++;
+        endCol--;
     }
-    
-    const printTheFirstRow = (matrix, startRow, startColumn, endColumn, result) => {
-        for(let i = startColumn; i <= endColumn; ++i) {
-            result.push(matrix[startRow][i]);
-        }
-        
-        return startRow + 1;
-    }
-    
-    const printTheLastColumn = (matrix, startRow, endRow, endColumn, result) => {
-        for(let i = startRow; i <= endRow; i++) {
-            result.push(matrix[i][endColumn]);
-        }
-        
-        return endColumn - 1;
-    }
-    
-    const printTheLastRow = (matrix, endRow, startColumn, endColumn, result) => {
-        for(let i = endColumn; i >= startColumn; --i) {
-            result.push(matrix[endRow][i]);
-        }
-        
-        return endRow - 1;
-    }
-    
-    const printTheFirstColumn = (matrix, endRow, startRow, startColumn, result) => {
-        for(let i = endRow; i >= startRow; --i) {
-            result.push(matrix[i][startColumn]);
-        }
-        
-        return startColumn + 1;
-    }
+
+    return res;
+}
