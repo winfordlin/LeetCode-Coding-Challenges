@@ -21,25 +21,23 @@ Output:
  */
 var permute = function (nums) {
   let result = [];
-  //edge case
-  if (nums.length === 0) return [];
+
   function recurse(index, tempArr) {
-    //base case
     if (index === nums.length) {
-      //3. backtracking
       result.push(tempArr);
       return;
     }
-    for (let idx of nums) {
-      //1. choose
-      if (!tempArr.includes(idx)) {
-        let newArr = tempArr.concat(idx);
+
+    for (let i = 0; i < nums.length; i++) {
+      //3. backtracking condition
+      if (!tempArr.includes(nums[i])) {
+        //1. choose
+        let newArr = tempArr.concat(nums[i]);
         //2. explore
         recurse(index + 1, newArr);
       }
     }
   }
-
   recurse(0, []);
   return result;
 };

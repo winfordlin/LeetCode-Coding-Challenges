@@ -23,20 +23,22 @@ Output:
  * @param {number[]} nums
  * @return {number[][]}
  */
-var subsets = function(nums) {
-  let res = [];
-  const helper = function(nums, arr, i) {
-    if (i === nums.length) {
-      res.push(arr);
-      return;
-    } else {
-      helper(nums, arr, i + 1);
-      helper(nums, arr.concat(nums[i]), i + 1);
+var subsets = function (nums) {
+  let result = [];
+
+  function recurse(index, tempArr) {
+    //1. push result
+    result.push(tempArr.slice());
+    //2. choose
+    for (let i = index; i < nums.length; i++) {
+      //3. explore
+      tempArr.push(nums[i]);
+      recurse(i + 1, tempArr);
+      //4. unchoose (backtrack)
+      tempArr.pop();
     }
-  };
+  }
 
-  helper(nums, [], 0);
-  return res;
+  recurse(0, []);
+  return result;
 };
-
-console.log(subsets([1, 2, 3]));
